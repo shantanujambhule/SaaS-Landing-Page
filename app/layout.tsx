@@ -1,10 +1,11 @@
 import './globals.css'
-import { Oswald } from "next/font/google";
+import { Oswald } from 'next/font/google'
 
-export const oswald = Oswald({
-  subsets: ["latin"],
-  weight: ["700"],
-});
+const oswald = Oswald({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-oswald',
+})
 
 export const metadata = {
   title: 'ADmyBRAND AI Suite',
