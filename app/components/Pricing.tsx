@@ -2,10 +2,8 @@
 
 import React, { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
-import PricingCard from './ui/PricingCard'
 import Card from './ui/Card'
 import Button from './ui/Button'
-import { calcPrice } from '../lib/pricing' // optional helper or inline fallback
 
 type Tier = {
   id: string
@@ -61,9 +59,7 @@ export default function Pricing() {
             }}
             className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8"
           >
-            {TIERS.map((t, i) => {
-              // If your PricingCard accepts className and children, pass glass classes directly.
-              // Otherwise wrap it in a <div> that applies the glass look.
+            {TIERS.map((t) => {
               const cardWrapperClasses =
                 'rounded-2xl bg-white/12 backdrop-blur-sm border border-white/8 shadow-md p-6 flex flex-col justify-between min-h-[220px]'
 
@@ -76,25 +72,26 @@ export default function Pricing() {
                   }}
                   className={cardWrapperClasses}
                 >
-                  {/* If PricingCard accepts className prop */}
-                  {React.isValidElement(<PricingCard />) ? (
-                    // safest approach: keep your PricingCard usage, but wrapped so we get glass look even if Card doesn't accept className
-                    <div className="flex-1">
-                      <div className="mb-4">
+                  <div className="flex-1">
+                    <div className="mb-4">
+                      <div className="flex items-center justify-between gap-4">
                         <h3 className="text-xl font-semibold">{t.name}</h3>
-                        <div className="text-2xl font-extrabold mt-2">{t.base === 0 ? 'Custom' : `$${t.base}/mo`}</div>
+                        {t.popular ? (
+                          <span className="text-xs px-2 py-1 rounded-full bg-white/16 font-medium">Popular</span>
+                        ) : null}
                       </div>
-
-                      <ul className="text-sm space-y-2 mb-6">
-                        {t.perks.map((p) => (
-                          <li key={p} className="flex items-center gap-2">
-                            <span className="inline-block w-2 h-2 rounded-full bg-white/80" aria-hidden />
-                            <span className="text-slate-700/90">{p}</span>
-                          </li>
-                        ))}
-                      </ul>
+                      <div className="text-2xl font-extrabold mt-2">{t.base === 0 ? 'Custom' : `$${t.base}/mo`}</div>
                     </div>
-                  ) : null}
+
+                    <ul className="text-sm space-y-2 mb-6">
+                      {t.perks.map((p) => (
+                        <li key={p} className="flex items-center gap-2">
+                          <span className="inline-block w-2 h-2 rounded-full bg-white/80" aria-hidden />
+                          <span className="text-slate-700/90">{p}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
                   <div className="mt-4">
                     <button
@@ -151,7 +148,7 @@ export default function Pricing() {
                 <div className="text-sm font-extrabold">Estimated</div>
                 <div className="text-3xl font-extrabold mt-1">{estimate}</div>
                 <div className="mt-4">
-                  <Button className='text-blue-700 font-extrabold' onClick={() => (window.location.href = `/signup?estimate=${encodeURIComponent(String(estimate))}`)}>
+                  <Button className="text-blue-700 font-extrabold" onClick={() => (window.location.href = `/signup?estimate=${encodeURIComponent(String(estimate))}`)}>
                     Start Free Trial
                   </Button>
                 </div>
