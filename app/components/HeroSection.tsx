@@ -3,7 +3,7 @@
 import React, { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import Lenis from '@studio-freight/lenis'
+import Lenis from 'lenis'
 import Image from 'next/image'
 // import BackgroundVideo from './BackgroundVideo' // enable if you want the video layer
 
